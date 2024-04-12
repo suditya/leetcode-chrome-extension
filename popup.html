@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Reminder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 13px 7px;
+            margin: 0;
+            display: flex;
+            /* Center the content vertically and horizontally */
+            justify-content: center;
+            align-items: center;
+            /* min-height: 100vh; */
+            /* Set minimum height for full viewport coverage */
+        }
+
+        .container {
+            background-color: #fff;
+            /* White background for the reminder form */
+            border-radius: 15px;
+            padding: 17px 14px;
+            /* width: 100%; */
+            width: 200px;
+            /* position: absolute; */
+            box-shadow: 0px 6px 15px 1px rgb(0 0 0 / 63%);
+            /* Subtle shadow for depth */
+        }
+
+        h1 {
+            /* text-align: center; */
+            /* margin-bottom: 20px; */
+            font-weight: 900;
+            font-size: 16px;
+            text-decoration: underline;
+            font-family: monospace;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333;
+            /* Adjust label text color */
+        }
+
+        input[type="email"],
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #ffffff;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            box-shadow: 3px 2px 3px 2px #000000a8;
+        }
+
+        button:hover {
+            background-color: #000000;
+            color: white;
+            /* box-shadow: 1px 3px 2px grey; */
+            box-shadow: 3px 2px 3px 2px #00000094;
+        }
+
+
+        input#days {
+            width: 60%;
+        }
+
+        span.days {
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 3px;
+            vertical-align: middle;
+            /* Align text with input field */
+        }
+    </style>
+    <script src="popup.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Re-Solve Reminder🔔!</h1>
+        <label for="email">EMAIL</label>
+        <input type="email" aria-required="true" id="email" required><br>
+        <label for="days">Remind me after </label>
+        <input type="number" id="days" min="1" max="30" value="10" aria-required="true" required> <span
+            class="days">days ⏰!</span>
+        <button id="scheduleBtn">Set Reminder! 🚀</button>
+    </div>
+
+</body>
+
+</html>
