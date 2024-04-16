@@ -1,5 +1,10 @@
 // content.js
 
+// "problemLink":"https://leetcode.com/problems/two-sum/description/",
+// "problemName":"Two Sum",
+// "email":"nileshdeshmukh0908@gmail.com",
+// "afterDays":"1"
+
 chrome.runtime.onMessage.addListener(function (message) {
     const { email, days, problemLink, problemName } = message;
     console.log(message, " got from the popup ")
@@ -9,15 +14,11 @@ chrome.runtime.onMessage.addListener(function (message) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, days, problemLink, problemName })
+        body: JSON.stringify({ email, afterDays: days, problemLink, problemName })
     })
         .then(response => {
             console.log(response, " from backend");
-            if (response.ok) {
-                alert('Email scheduled successfully');
-            } else {
-                alert('Error scheduling email', response);
-            }
+            alert("Email scheduled successfully!");
         })
         .catch(error => {
             alert('Error scheduling email:', error);
