@@ -12,6 +12,45 @@ function isValidGmail(email) {
     return gmailRegex.test(email);
 }
 
+function showToast(message) {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+
+    // Append toast to the body
+    document.body.appendChild(toast);
+
+    // Automatically remove toast after 3 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Inject CSS styles for toast into the web page
+const toastStyles = `
+    .toast {
+        position: absolute;
+        top: 1rem;
+        right: -6rem;
+        transform: translateX(-50%);
+        background-color: #fff8f8;
+        color: #000;
+        padding: 8px 20px;
+        border-radius: 13px;
+        box-shadow: 4px 3px 5px rgb(255 249 249 / 20%);
+        z-index: 9999;
+        font-family: monospace;
+        font-size: 12px;
+        transition: opacity 0.4s ease;
+        width: 220px;
+        }
+`;
+
+const styleElement = document.createElement('style');
+styleElement.textContent = toastStyles;
+document.head.appendChild(styleElement);
+
 
 document.addEventListener('DOMContentLoaded', async function () {
     // Your DOM manipulation code goes here...
@@ -30,15 +69,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const sendMessageToContentScript = async () => {
             try {
-                const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-                const activeTab = tabs[0];
+                const queryOptions = { active: true, lastFocusedWindow: true };
+                // `tab` will either be a `tabs.Tab` instance or `undefined`.
+                let [activeTab] = await chrome.tabs.query(queryOptions);
                 const problemLink = activeTab.url;
                 const problemName = activeTab.title;
                 if (!isLeetCodeProblemPage(problemLink)) {
                     alert("Works only on LEETCODE problems");
                     return;
                 }
-
                 await chrome.tabs.sendMessage(activeTab.id, { email, days, problemLink, problemName });
                 console.log("sent the message to content script");
             } catch (error) {
@@ -47,7 +86,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         };
 
         // Start sending message to content script
+        // if (tabs[0].url.match('https:\/\/.*.leetcode.com\/.*')) {
         await sendMessageToContentScript();
+        // }
     });
 });
 

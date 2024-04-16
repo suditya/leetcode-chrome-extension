@@ -93,21 +93,40 @@
             vertical-align: middle;
             /* Align text with input field */
         }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
     </style>
     <script src="popup.js"></script>
 </head>
 
 <body>
     <div class="container">
+        <a href="https://leetcode.com/problemset/" target="_blank"> Leetcode Problems</a>
         <h1>Re-Solve Reminder🔔!</h1>
         <label for="email">EMAIL</label>
         <input type="email" aria-required="true" id="email" required><br>
         <label for="days">Remind me after </label>
-        <input type="number" id="days" min="1" max="30" value="10" aria-required="true" required> <span
+        <input type="number" id="days" min="1" max="30" value="7" aria-required="true" required> <span
             class="days">days ⏰!</span>
         <button id="scheduleBtn">Set Reminder! 🚀</button>
     </div>
-
 </body>
 
 </html>

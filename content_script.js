@@ -1,14 +1,64 @@
 // content.js
 
-// "problemLink":"https://leetcode.com/problems/two-sum/description/",
-// "problemName":"Two Sum",
-// "email":"nileshdeshmukh0908@gmail.com",
-// "afterDays":"1"
 
-chrome.runtime.onMessage.addListener(function (message) {
+// Function to create and display toast notification
+function showToast(message) {
+    // Create toast element
+    const toast = document.createElement('div');
+    toast.classList.add('toast');
+    toast.textContent = message;
+
+    // Append toast to the body
+    document.body.appendChild(toast);
+
+    // Show toast
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+
+    // Automatically remove toast after 3 seconds
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+
+// Inject CSS styles for toast into the web page
+const toastStyles = `
+    .toast {
+        position: fixed;
+        top: 3rem;
+        transform: translateX(-50%);
+        left: 50%;
+        background-color: #333;
+        color: #fff;
+        padding: 15px 30px;
+        border-radius: 20px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        border: 3px solid #65e165;
+    }
+
+    .toast.show {
+        opacity: 1;
+    }
+`;
+
+const styleElement = document.createElement('style');
+styleElement.textContent = toastStyles;
+document.head.appendChild(styleElement);
+
+// Example usage of showToast function
+
+
+chrome.runtime.onMessage.addListener(async function (message) {
     const { email, days, problemLink, problemName } = message;
     console.log(message, " got from the popup ")
-    // Call the backend API with the extracted data
+
     fetch('https://chrome-extension-backend-cvc3.onrender.com/api/schedule-email', {
         method: 'POST',
         headers: {
@@ -23,11 +73,13 @@ chrome.runtime.onMessage.addListener(function (message) {
             return response.json(); // Parse the JSON response
         })
         .then(data => {
-            console.log(data); // Log the parsed response data
-            alert(JSON.stringify(data.message)); // Display the response data using alert
+            console.log(data);
+            showToast(data.message);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-            alert('Error fetching data:', error.message); // Display the error message using alert
+            // alert('Error fetching data:', error.message); // Display the error message using alert
+            showToast('Error fetching data:', error.message)
+            // chrome.runtime.sendMessage({ type: "show_notification", payload: { message: error.message } })
         });
 });
