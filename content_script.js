@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener(function (message) {
     })
         .then(response => {
             console.log(response, " from backend");
-            alert("Email scheduled successfully!");
+            alert(response);
         })
         .catch(error => {
             alert(error);
