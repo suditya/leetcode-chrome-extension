@@ -21,6 +21,6 @@ chrome.runtime.onMessage.addListener(function (message) {
             alert("Email scheduled successfully!");
         })
         .catch(error => {
-            alert('Error scheduling email:', error);
+            alert(error);
         });
 });
