@@ -17,10 +17,17 @@ chrome.runtime.onMessage.addListener(function (message) {
         body: JSON.stringify({ email, afterDays: days, problemLink, problemName })
     })
         .then(response => {
-            console.log(response, " from backend");
-            alert(response);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json(); // Parse the JSON response
+        })
+        .then(data => {
+            console.log(data); // Log the parsed response data
+            alert(JSON.stringify(data)); // Display the response data using alert
         })
         .catch(error => {
-            alert(error);
+            console.error('Error fetching data:', error);
+            alert('Error fetching data:', error.message); // Display the error message using alert
         });
 });
