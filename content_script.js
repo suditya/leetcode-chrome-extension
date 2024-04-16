@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(function (message) {
         })
         .then(data => {
             console.log(data); // Log the parsed response data
-            alert(JSON.stringify(data)); // Display the response data using alert
+            alert(JSON.stringify(data.message)); // Display the response data using alert
         })
         .catch(error => {
             console.error('Error fetching data:', error);
