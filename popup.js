@@ -12,45 +12,6 @@ function isValidGmail(email) {
     return gmailRegex.test(email);
 }
 
-function showToast(message) {
-    // Create toast element
-    const toast = document.createElement('div');
-    toast.classList.add('toast');
-    toast.textContent = message;
-
-    // Append toast to the body
-    document.body.appendChild(toast);
-
-    // Automatically remove toast after 3 seconds
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
-}
-
-// Inject CSS styles for toast into the web page
-const toastStyles = `
-    .toast {
-        position: absolute;
-        top: 1rem;
-        right: -6rem;
-        transform: translateX(-50%);
-        background-color: #fff8f8;
-        color: #000;
-        padding: 8px 20px;
-        border-radius: 13px;
-        box-shadow: 4px 3px 5px rgb(255 249 249 / 20%);
-        z-index: 9999;
-        font-family: monospace;
-        font-size: 12px;
-        transition: opacity 0.4s ease;
-        width: 220px;
-        }
-`;
-
-const styleElement = document.createElement('style');
-styleElement.textContent = toastStyles;
-document.head.appendChild(styleElement);
-
 
 document.addEventListener('DOMContentLoaded', async function () {
     // Your DOM manipulation code goes here...
@@ -63,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     document.getElementById('scheduleBtn').addEventListener('click', async function () {
         const email = document.getElementById('email').value;
         const days = document.getElementById('days').value;
+
         chrome.storage.local.set({ 'leetcodeEmail': email }).then(() => {
             console.log("email is set");
         }); // saving in the local storage after getting the email
@@ -87,45 +49,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Start sending message to content script
         // if (tabs[0].url.match('https:\/\/.*.leetcode.com\/.*')) {
+
         await sendMessageToContentScript();
-        // }
+
     });
 });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     let messageSent = false; // Flag to track whether message has been sent
-
-//     document.getElementById('scheduleBtn').addEventListener('click', function () {
-//         const email = document.getElementById('email').value;
-//         const days = document.getElementById('days').value;
-
-//         // Function to send message to content script
-//         const sendMessageToContentScript = () => {
-//             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-//                 const activeTab = tabs[0];
-//                 const problemLink = activeTab.url;
-//                 const problemName = activeTab.title;
-
-//                 // Check if the URL is a valid LeetCode problem page
-//                 if (!isLeetCodeProblemPage(problemLink)) {
-//                     alert("Works only on LEETCODE problems");
-//                     return;
-//                 }
-
-//                 // Send message to content script only if it hasn't been sent already
-//                 if (!messageSent) {
-//                     chrome.tabs.sendMessage(activeTab.id, { email, days, problemLink, problemName }, function (response) {
-//                         if (!response) {
-//                             setTimeout(sendMessageToContentScript, 500);
-//                         }
-//                     });
-
-//                     messageSent = true; // Set flag to true after sending message
-//                 }
-//             });
-//         };
-
-//         // Start sending message to content script
-//         sendMessageToContentScript();
-//     });
-// })

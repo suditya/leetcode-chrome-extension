@@ -59,6 +59,11 @@ chrome.runtime.onMessage.addListener(async function (message) {
     const { email, days, problemLink, problemName } = message;
     console.log(message, " got from the popup ")
 
+    if (days <= 0 || days > 30) {
+        showToast("⚠️ Please select a number of days between 1 and 30 ⚠️");
+        return;
+    }
+
     fetch('https://chrome-extension-backend-cvc3.onrender.com/api/schedule-email', {
         method: 'POST',
         headers: {
